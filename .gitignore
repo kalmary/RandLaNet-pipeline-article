@@ -1,0 +1,34 @@
+# ---- Core LaTeX build artifacts ----
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pdfsync
+*.dvi
+*.xdv
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.ist
+*.xdy
+*-blx.bib
+
+# Generated manuscript PDFs in the repository root
+/*.pdf
