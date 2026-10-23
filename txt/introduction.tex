@@ -1,7 +1,21 @@
 \section{Introduction}
 
-Example citation for verifying the bibliography workflow \citep{beck2003test}.
+Point cloud semantic segmentation enables automated scene interpretation in infrastructure inventory, transportation-corridor mapping, autonomous navigation, and environmental monitoring. In large-area surveys, it supports the extraction of spatially referenced objects and terrain classes from airborne, mobile, and terrestrial laser-scanning data. The increasing scale of such datasets makes efficient and reliable segmentation essential for their operational use.
+
+Applying semantic segmentation to large-area point clouds is computationally demanding. A scene may contain substantially more points than a model can process in a single pass, while their spatial density may vary because of acquisition geometry, sensor distance, and occlusions. Full-scene inference therefore requires a processing pipeline that divides the data into bounded inputs and reconstructs predictions for the complete cloud~\citep{randlanet}.
+
+Semantic-segmentation methods process point clouds directly, voxelize them, or project them onto two-dimensional representations~\citep{pointnet,minkowski,rangenet}. Regardless of the representation, full-scene segmentation requires an external pipeline to prepare bounded model inputs and reconstruct predictions for the complete cloud. Its design determines the spatial context and coverage provided to the model and may affect segmentation quality, computational cost, and sensitivity to input-data changes even when the model remains unchanged.
+
+This work was developed as part of the BRIK project, which included semantic segmentation of large point clouds collected near railway tracks. These clouds had non-uniform point density and numerous gaps. These factors motivated the development of a pipeline designed to be relatively robust to such problems while remaining scalable, transparent, and straightforward to modify and maintain.
 
 \subsection{Research Problem}
 
+Large-area point clouds are often too large to be processed as a single model input. They must be partitioned and sampled before inference, after which the partial predictions must be combined and reconstructed for the complete cloud. These operations determine the spatial extent, point distribution, and coverage presented to the model. Research on large- and urban-scale point-cloud segmentation therefore treats sampling and scene partitioning as integral parts of the processing workflow~\citep{randlanet,sensaturban}.
+
+These decisions become particularly important when point density is non-uniform or changes between datasets. Differences in sensors and acquisition conditions alter point-sampling patterns, and density variation has been identified as a component of the resulting domain gap~\citep{densityshift,complete-label,lidomaug}. The research problem is therefore to determine how the external pipeline affects segmentation accuracy, execution time, and memory consumption when the model remains unchanged, and whether its organization can limit accuracy loss under density shift.
+
 \subsection{Study Objective}
+
+The objective of this paper is to design and evaluate an external data-processing pipeline intended to improve the robustness of RandLA-Net-based point cloud semantic segmentation, with a particular focus on changes in data density.
+
+The scope covers thee model-independent organization of data preparation, inference, and full-cloud reconstruction, followed by an experimental comparison of the proposed and reference pipelines on the BRIK project dataset and the DALES benchmark. No changes to the RandLA-Net architecture are considered.
