@@ -32,3 +32,30 @@
 
 # Generated manuscript PDFs in the repository root
 /*.pdf
+
+# Python bytecode and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+ENV/
+
+# Python tooling and coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.ipynb_checkpoints/
+
+# Python packaging artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
