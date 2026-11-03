@@ -50,6 +50,14 @@ Przed oddaniem tekstu autor sprawdza każde twierdzenie o wykonanej czynności, 
 
 Recenzent zgłasza uwagę w formacie: **fragment → konkretny problem → proponowana poprawka lub brakująca informacja**. Zamiast „brzmi jak AI” wskazuje np. „ocena wydajności bez punktu odniesienia” albo „powtórzenie poprzedniego akapitu”. Odróżnia błąd rzeczowy od preferencji stylistycznej. Nie wymaga zmiany poprawnego zdania tylko dlatego, że zawiera jedną z wymienionych konstrukcji. Po poprawkach sprawdza ponownie zakwestionowane fragmenty i to, czy zmiana nie usunęła istotnego zastrzeżenia ani nie dodała nowego twierdzenia.
 
+## Kod źródłowy opisywanych rozwiązań
+
+Przy opisywaniu rozwiązania można odwoływać się do kodu w repozytorium `/Users/michalsiniarski/Documents/PROGRAMMING/RandLANet_Segmentation`:
+
+- Rozwiązanie autora (`voxel_based`): branch `DALES`.
+- Oryginalny pipeline (`prob-sampling`): branch `prob-sampler-DALES`.
+- Na obu branchach `src/utils/nn_utils` jest submodułem, który powinien być na branchu `article`.
+
 ## Zasady pracy w repozytorium
 
 - Nie dodawaj do kodu komentarzy ani innych śladów sugerujących, że program przygotował model językowy lub że powstał w wyniku rozmowy z użytkownikiem.
