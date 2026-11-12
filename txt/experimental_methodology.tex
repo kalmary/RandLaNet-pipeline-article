@@ -2,6 +2,66 @@
 
 \subsection{Datasets}
 
+DALES is the primary dataset for comparing the voxel-sampler-based and probability-sampler-based pipelines in terms of segmentation quality and computational performance. The dataset collected in the BRIK project provides a~supplementary segmentation-quality evaluation.
+
+The BRIK dataset is included because the proposed pipeline was developed for the project's application of RandLA-Net to railway-corridor scenes. Point density is generally low and varies across the scans, with large gaps in coverage. The dataset is strongly imbalanced across its ten semantic classes.
+
+DALES contains forty aerial LiDAR scenes covering approximately 10~km$^2$, with nearly half a~billion labeled points. Its published split contains 29 training scenes and 11 test scenes~\citep{dales}. Its eight classes and the BRIK classes are listed in Table~\ref{tab:dataset_classes}, using the zero-based indices in the classification reports.
+
+\begin{table}[H]
+  \centering
+  \caption{Semantic classes and report indices for the two datasets.}
+  \label{tab:dataset_classes}
+  \begin{tabular}{cll}
+    \toprule
+    Report index & BRIK & DALES \\
+    \midrule
+    0 & Railway tracks & Ground \\
+    1 & Ground & Vegetation \\
+    2 & Masts & Cars \\
+    3 & Support devices & Trucks \\
+    4 & Overhead lines & Power lines \\
+    5 & Fences & Fences \\
+    6 & Poles & Poles \\
+    7 & Vegetation & Buildings \\
+    8 & Buildings & --- \\
+    9 & Other objects & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/showcase/brik-data-showcase.png}
+
+    \small (a) BRIK
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/showcase/dales-data-showcase.png}
+
+    \small (b) DALES
+  \end{minipage}
+  \caption{Example point clouds: a~BRIK railway corridor and a~DALES scene.}
+  \label{fig:dataset_examples}
+\end{figure}
+
+The DALES dataset was evaluated twice: once with the probability-sampler-based pipeline and once with the voxel-sampler-based pipeline.
+
 \subsection{Baseline Model and Experimental Setup}
 
+Both pipelines use the standard RandLA-Net architecture~\citep{randlanet}. The comparison concerns the surrounding processing workflow: model-input construction, prediction aggregation, and reconstruction of labels for the complete point cloud.
+
+The BRIK classification-report tables use identical per-class support, totaling 363\,549 points for each pipeline. For DALES, both tables cover 550\,000 points with identical per-class support. These counts refer to the precision, recall, and F1-score tables. The report samples are selected with class balancing.
+
+Additional computational benchmarks compared both pipelines on 10 DALES test clouds using CUDA on an NVIDIA GeForce RTX~5090.
+
+Stage timings separated model loading, cloud reading, array extraction, model prediction, and reconstruction. Total processing time included model loading and input reading; output-file writing was excluded.
+
 \subsection{Evaluation Metrics}
+
+Segmentation quality is evaluated using per-class precision, recall, F1-score, and IoU, together with overall accuracy, balanced accuracy, and mIoU. Throughput is calculated from the original input point count, excluding repeated observations in overlapping windows or queries.
+
+RAM measurements cover the entire process tree. PSS apportions shared pages between processes, whereas summed RSS can count them more than once. GPU measurements distinguish memory allocated to tensors from memory reserved by the PyTorch allocator.
